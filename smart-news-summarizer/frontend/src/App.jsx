@@ -6,6 +6,7 @@ import { stopSpeech } from './utils/speech';
 import SavedArticles from './components/SavedArticles';
 import { Moon, Sun, AlertTriangle, Cpu, Zap, Library, Bookmark } from 'lucide-react';
 import './index.css';
+import API_BASE from './config';
 
 function App() {
   const [results, setResults] = useState([]);
@@ -42,7 +43,7 @@ function App() {
     stopSpeech();
 
     try {
-      const response = await fetch('http://localhost:5000/api/analyze', {
+      const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ urls })

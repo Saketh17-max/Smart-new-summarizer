@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import API_BASE from '../config';
 import { Send, User, Bot, Loader2 } from 'lucide-react';
 
 const ArticleChat = ({ articleContext }) => {
@@ -34,7 +35,7 @@ const ArticleChat = ({ articleContext }) => {
 
             console.log("Sending chat request:", { messageCount: chatHistory.length, contextLength: truncatedContext.length });
 
-            const res = await fetch('http://localhost:5000/api/chat', {
+            const res = await fetch(`${API_BASE}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE from '../config';
 import { speakText, stopSpeech } from '../utils/speech';
 import ArticleChat from './ArticleChat';
 import {
@@ -33,7 +34,7 @@ const ResultCard = ({ data, index, isComparison }) => {
     const { url, title, originalContentOptions, summary, sentiment, topic, explainSimply, whyItMatters, timeline, bias, facts, headline, difficulty, readingTime } = data;
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/saved')
+        fetch(`${API_BASE}/api/saved`)
             .then(r => r.json())
             .then(saved => { if (saved.some(a => a.url === url)) setIsSaved(true); })
             .catch(() => { });
@@ -42,10 +43,10 @@ const ResultCard = ({ data, index, isComparison }) => {
     const handleSave = async () => {
         try {
             if (isSaved) {
-                await fetch(`http://localhost:5000/api/saved/${encodeURIComponent(url)}`, { method: 'DELETE' });
+                await fetch(`${API_BASE}/api/saved/${encodeURIComponent(url)}`, { method: 'DELETE' });
                 setIsSaved(false);
             } else {
-                await fetch('http://localhost:5000/api/saved', {
+                await fetch(`${API_BASE}/api/saved`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -66,7 +67,7 @@ const ResultCard = ({ data, index, isComparison }) => {
         if (lang === 'en') { setTranslatedText(''); return; }
         setIsTranslating(true);
         try {
-            const res = await fetch('http://localhost:5000/api/translate', {
+            const res = await fetch(`${API_BASE}/api/translate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: summary, targetLang: lang })

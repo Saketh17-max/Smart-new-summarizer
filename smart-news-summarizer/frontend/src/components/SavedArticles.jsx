@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import API_BASE from '../config';
 import { Bookmark, Clock, Trash2, ExternalLink } from 'lucide-react';
 import ResultCard from './ResultCard';
 
@@ -13,7 +14,7 @@ const SavedArticles = () => {
 
     const fetchSaved = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/saved');
+            const res = await fetch(`${API_BASE}/api/saved`);
             const data = await res.json();
             setSaved(data);
         } catch (err) {
@@ -26,7 +27,7 @@ const SavedArticles = () => {
     const handleDelete = async (e, url) => {
         e.stopPropagation();
         try {
-            await fetch(`http://localhost:5000/api/saved/${encodeURIComponent(url)}`, { method: 'DELETE' });
+            await fetch(`${API_BASE}/api/saved/${encodeURIComponent(url)}`, { method: 'DELETE' });
             setSaved(prev => prev.filter(a => a.url !== url));
             if (viewingArticle?.url === url) setViewingArticle(null);
         } catch (err) {
