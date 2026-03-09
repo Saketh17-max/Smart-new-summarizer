@@ -1,5 +1,5 @@
 // Central API configuration — change this URL when switching environments
-const API_BASE = 'https://smart-new-summarizer.onrender.com';
+const API_BASE = 'http://localhost:5000';
 
 // Route paths on the deployed backend (no /api/ prefix)
 export const ROUTES = {
