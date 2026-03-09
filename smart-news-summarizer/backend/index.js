@@ -15,9 +15,9 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.get("/", (req, res) => {
-  res.send("Smart News Summarizer API Running 🚀");
+    res.send("Smart News Summarizer API Running 🚀");
 });
-app.post('/api/analyze', async (req, res) => {
+app.post('/analyze', async (req, res) => {
     const { urls } = req.body;
     if (!urls || !Array.isArray(urls) || urls.length === 0) {
         return res.status(400).json({ error: 'Please provide an array of 1 or 2 URLs.' });
@@ -79,7 +79,7 @@ app.post('/api/analyze', async (req, res) => {
     }
 });
 
-app.post('/api/translate', async (req, res) => {
+app.post('/translate', async (req, res) => {
     const { text, targetLang } = req.body;
     if (!text || !targetLang) {
         return res.status(400).json({ error: 'Text and target language are required.' });
@@ -93,7 +93,7 @@ app.post('/api/translate', async (req, res) => {
     }
 });
 
-app.post('/api/chat', async (req, res) => {
+app.post('/chat', async (req, res) => {
     const { messages, context } = req.body;
     if (!messages || !context) {
         return res.status(400).json({ error: 'Messages and context are required.' });
@@ -119,11 +119,11 @@ const getSavedArticles = () => {
     } catch { return []; }
 };
 
-app.get('/api/saved', (req, res) => {
+app.get('/saved', (req, res) => {
     res.json(getSavedArticles());
 });
 
-app.post('/api/saved', (req, res) => {
+app.post('/saved', (req, res) => {
     const article = req.body;
     if (!article.url) return res.status(400).json({ error: 'Article URL strictly required to save' });
 
@@ -135,7 +135,7 @@ app.post('/api/saved', (req, res) => {
     res.json({ success: true });
 });
 
-app.delete('/api/saved/:url', (req, res) => {
+app.delete('/saved/:url', (req, res) => {
     const url = decodeURIComponent(req.params.url);
     let articles = getSavedArticles();
     articles = articles.filter(a => a.url !== url);
